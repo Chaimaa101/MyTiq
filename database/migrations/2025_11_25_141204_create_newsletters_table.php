@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('newsletter_subscriptions', function (Blueprint $table) {
+        Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+             $table->string('email');
             $table->enum('status', ['pending', 'subscribed', 'unsubscribed'])->default('pending');
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('newsletter_subscriptions');
+        Schema::dropIfExists('newsletters');
     }
 };

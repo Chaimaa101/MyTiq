@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->date('date');
+            $table->string('place');
             $table->decimal('price', 8, 2);
             $table->integer('capacity');
             $table->string('image');
