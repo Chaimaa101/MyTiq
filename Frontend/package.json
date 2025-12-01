@@ -11,8 +11,13 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "axios": "^1.13.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+<<<<<<< HEAD
+=======
+    "react-hook-form": "^7.67.0",
+>>>>>>> b392ce937322293b8f89abe3ac1053518eeb1b97
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.6",
     "tailwindcss": "^4.1.17"
