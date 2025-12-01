@@ -1,17 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Connexion from "./pages/Connexion";
+import Inscription from "./pages/Inscription";
 
 function App() {
   return (
     <>
-    <h1 className="text-3xl text-red-500 font-bold underline">
-    Hello world!
-  </h1>
+      <Routes>
+        <Route path="/connexion" element={<Connexion />} />
+        <Route path="/inscription" element={<Inscription />} />
 
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
