@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Layout from "./components/Layout"
 import Home from "./pages/Home"
-import DetailsEvent from "./pages/DetailsEvent"
+import EventForm from "./pages/EventForm"
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element = {<Layout />}>
           <Route index element={<Home/>}/>
-          <Route path="/details/:type/:id" element={<DetailsEvent />}/>
+          <Route path="/addEvent" element={<EventForm />}/>
         </Route>
       </Routes>
     </BrowserRouter>

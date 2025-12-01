@@ -3,16 +3,16 @@
 ## 📁 Documentation du Projet
 
 ### 📄 Maquetage
-[![Figma](https://img.shields.io/badge/📋_Figma-View-blue?style=for-the-badge&logo=googledocs)](https://www.figma.com/design/JDYB3FdfSMVr5qfd4WHrFG/MyTiq?node-id=0-1&t=sUIsJUBkRH1JQzPt-1)
+[![Figma](https://img.shields.io/badge/📋_Figma-View-blue?style=for-the-badge&logo=googledocs)]( )
 
 ### 🗓️ Planification Jira
-[![Jira](https://img.shields.io/badge/🗓️_Planification_Jira-View-blue?style=for-the-badge&logo=jira)](https://afkirchaimaa36.atlassian.net/jira/software/projects/MP/boards/68/backlog?atlOrigin=eyJpIjoiZTRmYzAyMzJmMGU1NDU1YWEwZWY3MDc5ZGIxZGZkM2EiLCJwIjoiaiJ9)
+[![Jira](https://img.shields.io/badge/🗓️_Planification_Jira-View-blue?style=for-the-badge&logo=jira)]( )
 
 ### 📊 Diagrammes de classe
-[![Lucidchart](https://img.shields.io/badge/📊_Diagrammes_classe-View-blue?style=for-the-badge&logo=lucidchart)](https://lucid.app/lucidchart/7c62153e-0c90-4930-9b6a-de1843ea9c1c/edit?invitationId=inv_c157137b-a731-4cb4-b886-d71d40e7290c)
+[![Lucidchart](https://img.shields.io/badge/📊_Diagrammes_classe-View-blue?style=for-the-badge&logo=lucidchart)]( )
 
 ### 📊 Diagrammes de cas d'utilisation
-[![Lucidchart](https://img.shields.io/badge/📊_Diagramme_use_case-View-blue?style=for-the-badge&logo=lucidchart)](https://afkirchaimaa36.atlassian.net/jira/software/projects/MP/boards/68/backlog?atlOrigin=eyJpIjoiZTRmYzAyMzJmMGU1NDU1YWEwZWY3MDc5ZGIxZGZkM2EiLCJwIjoiaiJ9)
+[![Lucidchart](https://img.shields.io/badge/📊_Diagramme_use_case-View-blue?style=for-the-badge&logo=lucidchart)]( )
 
 
 ## 🎯 Objectif

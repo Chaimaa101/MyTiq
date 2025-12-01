@@ -1,19 +1,22 @@
-import React from 'react'
-import Header from '../components/Header'
-import HeroSection from '../components/HeroSection'
-import EventsList from './EventsList'
-import Footer from '../components/Footer'
-import NewsLetter from '../components/newsLetter'
+import HeroSection from "../components/HeroSection";
+import EventsList from "./EventsList";
+import NewsLetter from "../components/newsLetter";
+import EventForm from "./EventForm";
 
 function Home() {
+  const events = []
+
   return (
     <>
-    <HeroSection/>
-    <EventsList/>
-    <NewsLetter/>
+      <div className="p-6 max-w-6xl mx-auto">
+        <HeroSection />
+        <EventsList events={events} />
+      </div>
 
+      <EventForm />
+      <NewsLetter />
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -46,9 +47,19 @@ class TicketController extends Controller
             'date'     => now(),
         ]);
 
+        
+        $pdf = Pdf::loadView('tickets.pdf', [
+            'ticket' => $ticket,
+            'event' => $event,
+            'user' => $user,
+        ]);
+        
+        $pdfPath = 'tickets/ticket_'.$ticket->id.'.pdf';
+        Storage::put($pdfPath, $pdf->output());
+        
+        $ticket->update(['pdf_path' => $pdfPath]);
+        
         event(new TicketCreated($ticket));
-
-        $pdf = Pdf::loadView('ticket' , [$ticket,$event,$user] );
 
         return response()->json([
             'message' => 'Ticket created successfully!',
