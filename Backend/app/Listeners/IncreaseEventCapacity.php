@@ -6,7 +6,7 @@ use App\Events\TicketCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class UpdateEventCapacity
+class IncreaseEventCapacity
 {
     /**
      * Create the event listener.

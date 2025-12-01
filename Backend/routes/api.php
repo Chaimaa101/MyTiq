@@ -23,15 +23,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::apiResource('event.tickets',TicketController::class);
-Route::apiResource('events',EventController::class);
-
-
-
 Route::post('/abonner', [NewsletterController::class, 'abonner']);
 Route::post('/desabonner', [NewsletterController::class, 'desabonner']);
 
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::get('/events', [EventController::class, 'index']);
+Route::get('/events/{event}', [EventController::class, 'show']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    
+Route::post('logout', [AuthController::class, 'logout']);
+
+Route::post('/events', [EventController::class, 'store']);
+Route::put('/events/{event}', [EventController::class, 'update']);
+Route::delete('/events/{event}', [EventController::class, 'destroy']);
+
+Route::apiResource('event.tickets',TicketController::class);
+
+});
+

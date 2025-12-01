@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TicketCanceled;
 use App\Events\TicketCreated;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Event;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -26,32 +28,39 @@ class TicketController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTicketRequest $request , Event $event)
-    {
-        try {
-            $request->validated();
+ public function store(StoreTicketRequest $request, Event $event)
+{
+    try {
+        $user = $request->user();
 
-           $ticket = $request->user()->tickets()->create([
+        if($event->capacity == 0){
+            return [
+                "message" => "les sont 3emrou"
+            ];
+        }else{
+             $ticket = $user->tickets()->create([
             'event_id' => $event->id,
-            'date'   => now()
+            'date'     => now(),
         ]);
 
         event(new TicketCreated($ticket));
 
+        $pdf = Pdf::loadView('ticket' , [$ticket,$event,$user] );
+
         return response()->json([
             'message' => 'Ticket created successfully!',
-            'ticket' => $ticket
+            'ticket'  => $ticket
         ], 201);
-        } catch (\Exception $e) {
-            return [
-                'error' => $e->getMessage()
-            ];
         }
+    } catch (\Exception $e) {
+        return response()->json([
+            'error'   =>  $e->getMessage()
+        ], 500);
     }
+}
 
     /**
      * Display the specified resource.
@@ -69,31 +78,15 @@ class TicketController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
-   {
-        try {
-            $infos = $request->validate();
-            $ticket->update($infos);
-            return [
-                'message' => 'ticket updated successfully',
-                'Ticket' =>$ticket
-            ];
-        } catch (\Exception $e) {
-            return [
-                'error' => $e->getMessage()
-            ];
-        }
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy( Event $event, Ticket $ticket)
     {
           try {
             $ticket->delete();
+
+            event(new TicketCanceled($ticket));
+
             return [
                 'message' => 'ticket deleted successfully',
             ];

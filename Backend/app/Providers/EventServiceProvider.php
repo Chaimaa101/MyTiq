@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Events\NewsletterSubscribed;
+use App\Events\TicketCanceled;
 use App\Events\TicketCreated;
 use App\Events\UserRegistered;
+use App\Listeners\DecreaseEventCapacity;
+use App\Listeners\IncreaseEventCapacity;
 use App\Listeners\SendWelcomeEmail;
 use App\Listeners\UpdateEventCapacity;
 use Illuminate\Auth\Events\Registered;
@@ -27,7 +30,10 @@ class EventServiceProvider extends ServiceProvider
         NewsletterSubscribed::class,
     ],
     TicketCreated::class => [
-        UpdateEventCapacity::class,
+        IncreaseEventCapacity::class,
+    ],
+ TicketCanceled::class => [
+        DecreaseEventCapacity::class,
     ],
 ];
 
