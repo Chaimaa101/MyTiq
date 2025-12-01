@@ -1,15 +1,15 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Footer from './Footer'
+import Navbar from './Navbar'
 
 export default function Layout() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Outlet /> {/* Ici s'affichent Home ou DetailsEvent */}
-      </main>
-      <Footer />
+
+    <Navbar/>
+        <Outlet />
+    <Footer/>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import DetailsEvent from "./pages/DetailsEvent";
@@ -7,7 +7,6 @@ import Inscription from "./pages/Inscription";
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         {/* Routes qui utilisent le layout avec Navbar + Footer */}
         <Route path="/" element={<Layout />}>
@@ -19,7 +18,6 @@ function App() {
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 
