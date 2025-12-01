@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\NewsletterSubscribed;
+use App\Events\TicketCanceled;
+use App\Events\TicketCreated;
+use App\Events\UserRegistered;
+use App\Listeners\DecreaseEventCapacity;
+use App\Listeners\IncreaseEventCapacity;
+use App\Listeners\SendWelcomeEmail;
+use App\Listeners\UpdateEventCapacity;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -15,10 +23,19 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
-        ],
-    ];
+    UserRegistered::class => [
+        SendWelcomeEmail::class,
+    ],
+    NewsletterSubscribed::class => [
+        NewsletterSubscribed::class,
+    ],
+    TicketCreated::class => [
+        IncreaseEventCapacity::class,
+    ],
+ TicketCanceled::class => [
+        DecreaseEventCapacity::class,
+    ],
+];
 
     /**
      * Register any events for your application.

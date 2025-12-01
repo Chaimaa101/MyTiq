@@ -18,7 +18,7 @@ class NewsletterFactory extends Factory
     {
         return [
             'email' => fake()->unique()->safeEmail(),
-            'status' => fake()->randomElement(['pending', 'confirmed']),
+            'confirmed' => fake()->boolean(),
         ];
     }
 }

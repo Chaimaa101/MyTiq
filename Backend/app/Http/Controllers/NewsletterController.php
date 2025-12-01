@@ -2,65 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewsletterSubscribed;
 use App\Models\Newsletter;
 use App\Http\Requests\StoreNewsletterRequest;
 use App\Http\Requests\UpdateNewsletterRequest;
+use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function abonner( Request $request)
     {
-        //
+        
+        $request->validate([
+            'email' => 'required|email|unique:newsletters,email'
+        ]);
+
+       $newsletter = Newsletter::create([
+            'email' => $request->email,
+            'confirmed' => true 
+        ]);
+
+          event(new NewsletterSubscribed($newsletter->email));
+
+        return response()->json(['message' => 'Subscribed successfully!']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreNewsletterRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Newsletter $newsletter)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Newsletter $newsletter)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateNewsletterRequest $request, Newsletter $newsletter)
-    {
-        //
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Newsletter $newsletter)
+    public function desabonner(Request $request )
     {
-        //
+          $request->validate([
+            'email' => 'required|email|exists:newsletters,email'
+        ]);
+
+        Newsletter::where('email', $request->email)->delete();
+
+        return response()->json(['message' => 'Unsubscribed successfully!']);
     }
+    
 }

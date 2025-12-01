@@ -22,7 +22,8 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users',
+            'event_id' => 'required|exists:events'
         ];
     }
 }

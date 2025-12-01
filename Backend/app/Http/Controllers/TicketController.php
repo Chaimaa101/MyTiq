@@ -2,65 +2,98 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TicketCanceled;
+use App\Events\TicketCreated;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Models\Event;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        try {
+            return  $request->user()->tickets()->with('event','user')->get();
+             
+        } catch (\Exception $e) {
+             return [
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTicketRequest $request)
-    {
-        //
+ public function store(StoreTicketRequest $request, Event $event)
+{
+    try {
+        $user = $request->user();
+
+        if($event->capacity == 0){
+            return [
+                "message" => "les sont 3emrou"
+            ];
+        }else{
+             $ticket = $user->tickets()->create([
+            'event_id' => $event->id,
+            'date'     => now(),
+        ]);
+
+        event(new TicketCreated($ticket));
+
+        $pdf = Pdf::loadView('ticket' , [$ticket,$event,$user] );
+
+        return response()->json([
+            'message' => 'Ticket created successfully!',
+            'ticket'  => $ticket
+        ], 201);
+        }
+    } catch (\Exception $e) {
+        return response()->json([
+            'error'   =>  $e->getMessage()
+        ], 500);
     }
+}
 
     /**
      * Display the specified resource.
      */
     public function show(Ticket $ticket)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
-    {
-        //
+         try {
+            return $ticket;
+             
+        } catch (\Exception $e) {
+             return [
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket $ticket)
+    public function destroy( Event $event, Ticket $ticket)
     {
-        //
+          try {
+            $ticket->delete();
+
+            event(new TicketCanceled($ticket));
+
+            return [
+                'message' => 'ticket deleted successfully',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage()
+            ];
+        }
     }
 }

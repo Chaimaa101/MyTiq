@@ -31,7 +31,7 @@ class EventController extends Controller
 
         if ($request->hasFile('image')) {
             $cloudinary = Cloudinary::upload($request->file('image')->getRealPath());
-            $validated['image'] = $cloudinary->getSecurePath(); // Save URL only
+            $validated['image'] = $cloudinary->getSecurePath(); 
         }
 
         $event = Event::create($validated);
