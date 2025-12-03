@@ -1,42 +1,48 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Context from "../services/Context";
 
 const EventForm = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    date: "",
-    price: "",
-    image: "",
-    place: "",
-    capacity: "",
-    description: "",
-  });
+  const { ajouter } = useContext(Context);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Event Data:", formData);
- 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
+    try {
+      await ajouter(formData); 
+      reset();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-lg mt-10">
-      <h2 className="text-xl font-bold mb-6 text-red-600">
-        Créer un événement
-      </h2>
+      <h2 className="text-xl font-bold mb-6 text-red-600">Créer un événement</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        
         <div>
           <label className="text-sm font-medium">Titre</label>
           <input
             type="text"
-            name="title"
-            onChange={handleChange}
-            className="border rounded-lg p-3 w-full outline-none"
+            {...register("title", { required: true })}
+            className="border p-3 rounded-lg w-full"
           />
+          {errors.title && <p className="text-red-500">Titre obligatoire</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -44,29 +50,28 @@ const EventForm = () => {
             <label className="text-sm font-medium">Date</label>
             <input
               type="date"
-              name="date"
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full outline-none"
+              {...register("date", { required: true })}
+              className="border p-3 rounded-lg w-full"
             />
           </div>
+
           <div>
             <label className="text-sm font-medium">Prix (DH)</label>
             <input
               type="number"
-              name="price"
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full outline-none"
+              {...register("price", { required: true })}
+              className="border p-3 rounded-lg w-full"
             />
           </div>
         </div>
 
         <div>
-          <label className="text-sm font-medium">Image (URL)</label>
+          <label className="text-sm font-medium">Image</label>
           <input
             type="file"
-            name="image"
-            onChange={handleChange}
-            className="border rounded-lg p-3 w-full outline-none"
+            accept="image/*"
+            {...register("image")}
+            className="border p-3 rounded-lg w-full"
           />
         </div>
 
@@ -75,18 +80,17 @@ const EventForm = () => {
             <label className="text-sm font-medium">Lieu</label>
             <input
               type="text"
-              name="location"
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full outline-none"
+              {...register("location", { required: true })}
+              className="border p-3 rounded-lg w-full"
             />
           </div>
+
           <div>
             <label className="text-sm font-medium">Capacité</label>
             <input
               type="number"
-              name="capacity"
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full outline-none"
+              {...register("capacity", { required: true })}
+              className="border p-3 rounded-lg w-full"
             />
           </div>
         </div>
@@ -94,20 +98,18 @@ const EventForm = () => {
         <div>
           <label className="text-sm font-medium">Description</label>
           <textarea
-            name="description"
+            {...register("description", { required: true })}
             rows="3"
-            onChange={handleChange}
-            className="border rounded-lg p-3 w-full outline-none resize-none"
-          ></textarea>
+            className="border p-3 rounded-lg w-full"
+          />
         </div>
 
         <button
           type="submit"
-          className="bg-red-600 text-white py-3 w-full rounded-lg font-medium hover:bg-red-700 transition flex items-center justify-center gap-2"
+          className="bg-red-600 text-white w-full py-3 rounded-lg hover:bg-red-700"
         >
           + Créer
         </button>
-
       </form>
     </div>
   );

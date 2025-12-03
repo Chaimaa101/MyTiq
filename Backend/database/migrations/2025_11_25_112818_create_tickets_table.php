@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
             $table->date('date');
             $table->string('pdf_url')->nullable();
+            $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
         });
 

@@ -68,7 +68,7 @@ export default function Inscription() {
           type="submit"
           className="bg-red-600 text-white font-medium w-full py-2 rounded-lg mt-3 hover:bg-red-700"
         >
-          S’inscrire
+          S'inscrire
         </button>
       </form>
     </div>
