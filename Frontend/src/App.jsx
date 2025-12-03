@@ -11,7 +11,7 @@ function App() {
         {/* Routes qui utilisent le layout avec Navbar + Footer */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="details/:type/:id" element={<DetailsEvent />} />
+          <Route path="details/:id" element={<DetailsEvent />} />
         </Route>
 
         {/* Routes indépendantes (Connexion / Inscription) */}
