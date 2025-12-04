@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import API from "./API";
+import API from "../utils/API";
 
 function ContextGenerale({ children}) {
   const [tickets, settickets] = useState([]);

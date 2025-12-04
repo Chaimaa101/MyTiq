@@ -17,6 +17,8 @@ const EventsList = ({ events }) => {
             image={event.image}
             title={event.title}
             date={event.date}
+            place={event.place}
+            capacity={event.capacity}
             price={event.price}
           />
         ))}

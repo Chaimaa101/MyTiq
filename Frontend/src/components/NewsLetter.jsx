@@ -9,7 +9,7 @@ function NewsLetter() {
   };
   return (
     <>
-    <section className="bg-gradient-to-r from-gray-200 to-gray-300 rounded-xl py-12 px-6 text-center mt-12">
+    <section className="bg-linear-to-r from-gray-200 to-gray-300 rounded-xl py-12 px-6 text-center mt-12">
       <div className="flex justify-center mb-4">
         <MdEmail className="text-red-500 w-14 h-14" />
       </div>

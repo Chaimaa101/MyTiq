@@ -28,7 +28,7 @@ class StoreEventRequest extends FormRequest
             'place'       => 'required|string|max:255',
             'price'       => 'required|numeric|min:0',
             'capacity'    => 'required|integer|min:1',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096'
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp'
         ];
     }
 }

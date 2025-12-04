@@ -10,12 +10,14 @@ import Inscription from "./pages/Inscription";
 function App() {
   return (
       <Routes>
+          <Route path="/connexion" element={<Connexion />} />
+        <Route path="/inscription" element={<Inscription />} />
+        
         <Route path="/" element = {<Layout />}>
           <Route index element={<Home/>}/>
           <Route path="/addEvent" element={<EventForm />}/>
-          <Route path="/evenements" element={<EventsList />}/>
-        <Route path="/connexion" element={<Connexion />} />
-        <Route path="/inscription" element={<Inscription />} />
+          <Route path="/events" element={<EventsList />}/>
+      
       </Route>
       </Routes>
   );

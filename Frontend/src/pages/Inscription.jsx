@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -15,7 +16,7 @@ export default function Inscription() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-30 p-6 bg-white rounded-lg shadow">
+    <div className="max-w-md mx-auto mt-15 p-6 bg-white rounded-lg shadow">
     <h1 className="text-3xl font-bold text-center text-red-600 mb-6">MyTiq</h1>
       <div className="flex justify-center gap-4 mb-10 border-b-gray-300 bg-gray-300 text-gray-500 font-medium p-2 rounded w-fit mx-auto">
         <button className="px-4 py-1 rounded  "><Link to="/connexion">Connexion</Link></button>

@@ -16,14 +16,12 @@ export default function Navbar() {
           <li className="hover:text-red-600 cursor-pointer"><Link to="/">Accueil</Link></li>
           <li className="hover:text-red-600 cursor-pointer"><Link to="/evenements">Evenements</Link></li>
           <li className="hover:text-red-600 cursor-pointer"><Link to="/dashboard">Dashboard</Link></li>
+          <li className="hover:text-red-600 cursor-pointer"><Link to="/addEvent">Add Event</Link></li>
         </ul>
 
-        <div className="hidden md:flex gap-8">
-        <button className="hidden md:block text-gray-700 font-medium  border-b-gray-700 px-4 py-2 rounded-md hover:bg-red-600 cursor-pointer hover:text-white transition">
-        <Link to="/connexion">Connexion</Link>  
-        </button>
+        <div className="hidden md:flex">
         <button className="hidden md:block text-white font-medium bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer transition">
-        <Link to="/inscription">S'inscrire</Link>  
+        <Link to="/connexion">Connexion</Link>  
         </button>
         </div>
 
@@ -44,7 +42,7 @@ export default function Navbar() {
         <div className="md:hidden px-4 pb-4 space-y-2 bg-white border-t border-gray-200">
           <Link to="/" className="block text-gray-700 hover:text-red-600">Accueil</Link>
           <Link to="/dashboard" className="block text-gray-700 hover:text-red-600">Dashboard</Link>
-          <Link to="/evenements" className="block text-gray-700 hover:text-red-600">Evenements</Link>
+          <Link to="/events" className="block text-gray-700 hover:text-red-600">Evenements</Link>
         </div>
       )}
     </nav>

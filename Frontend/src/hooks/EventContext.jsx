@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Context from "./Context";
-import API from "./API";
+import Context from "../services/Context";
+import API from "../services/API";
 
 function ContextGenerale({ children }) {
   const [events, setevents] = useState([]);
@@ -22,14 +22,18 @@ function ContextGenerale({ children }) {
 
   const ajouter = async (data) => {
     try {
-       await axios.post(`${API}/events`, data, {
+       const formDataToSend = new FormData();
+
+      for (let key in data) {
+      formDataToSend.append(key, data[key]);
+    }
+
+      const res = await axios.post(`${API}/events`, data, {
         headers: { "Content-Type": "application/json" },
       });
-
-      alert(" Added successfully!");
+return res.data
     } catch (error) {
       console.error(" Add error:", error);
-      alert("Error while adding!");
     }
   };
 
@@ -40,7 +44,7 @@ function ContextGenerale({ children }) {
         data
       );
 
-      alert("✔ Updated successfully!");
+      alert("Updated successfully!");
     } catch (error) {
       console.error(" Update error:", error);
       alert("Error while updating!");
