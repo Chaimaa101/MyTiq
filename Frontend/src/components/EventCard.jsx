@@ -1,6 +1,19 @@
 import React from "react";
+import {
+  FaCalendarDay,
+  FaChair,
+  FaEuroSign,
+  FaLocationArrow,
+  FaLocationDot,
+  FaMoneyBill,
+  FaMoneyBill1,
+  FaMoneyBills,
+  FaPlaceOfWorship,
+  FaTicket,
+  FaTicketSimple,
+} from "react-icons/fa6";
 
-const EventCard = ({ image, title, date, price }) => {
+const EventCard = ({ image, title, date, place, capacity, price }) => {
   return (
     <div className="bg-white shadow-md rounded-xl p-3">
       <img
@@ -8,15 +21,30 @@ const EventCard = ({ image, title, date, price }) => {
         alt={title}
         className="rounded-lg w-full h-40 object-cover"
       />
-
       <div className="mt-3">
         <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
-        <p className="text-sm text-gray-500">{date}</p>
-        <p className="text-sm text-gray-500">{date}</p>
-        <p className="text-sm text-gray-500">{date}</p>
+
+        <p className="text-sm text-gray-500 flex items-center gap-2">
+          <FaCalendarDay className="text-gray-500" />
+          {date}
+        </p>
+
+        <p className="text-sm text-gray-500 flex items-center gap-2">
+          <FaLocationDot className="text-gray-500" />
+          {place}
+        </p>
+
+        <p className="text-sm text-gray-500 flex items-center gap-2">
+          <FaTicket className="text-gray-500" />
+          {capacity}
+        </p>
 
         <div className="flex justify-between items-center mt-4">
-          <span className="font-semibold text-gray-900">{price}DH</span>
+          <span className="font-semibold text-gray-900 flex items-center gap-1">
+            <FaEuroSign className="text-gray-500" />
+            {price} DH
+          </span>
+
           <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
             Réserver
           </button>

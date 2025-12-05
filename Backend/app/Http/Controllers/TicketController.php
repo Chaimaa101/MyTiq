@@ -37,27 +37,23 @@ class TicketController extends Controller
     try {
         $user = $request->user();
 
-        if($event->capacity == 0){
-            return [
-                "message" => "les sont 3emrou"
-            ];
-        }else{
+        if ($event->capacity <= 0) {
+            return response()->json([
+                "message" => "Les billets pour cet événement sont épuisés !"
+            ], 422);
+        }
+        
              $ticket = $user->tickets()->create([
             'event_id' => $event->id,
             'date'     => now(),
         ]);
 
         
-        $pdf = Pdf::loadView('tickets.pdf', [
+        $pdf = Pdf::loadView('Tickets.ticket_pdf', [
             'ticket' => $ticket,
             'event' => $event,
             'user' => $user,
         ]);
-        
-        $pdfPath = 'tickets/ticket_'.$ticket->id.'.pdf';
-        Storage::put($pdfPath, $pdf->output());
-        
-        $ticket->update(['pdf_path' => $pdfPath]);
         
         event(new TicketCreated($ticket));
 
@@ -65,7 +61,7 @@ class TicketController extends Controller
             'message' => 'Ticket created successfully!',
             'ticket'  => $ticket
         ], 201);
-        }
+        
     } catch (\Exception $e) {
         return response()->json([
             'error'   =>  $e->getMessage()
@@ -87,6 +83,15 @@ class TicketController extends Controller
             ];
         }
     }
+
+    public function update(Request $request, Event $event, Ticket $ticket)
+{
+    $ticket->update($request->all());
+    return response()->json([
+        'message' => 'Ticket updated successfully',
+        'ticket' => $ticket
+    ], 200);
+}
 
     /**
      * Remove the specified resource from storage.

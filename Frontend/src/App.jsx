@@ -1,30 +1,32 @@
-
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Layout from "./components/Layout"
-import Home from "./pages/Home"
-import EventForm from "./pages/EventForm"
-import EventsList from "./pages/EventsList"
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import EventForm from "./pages/EventForm";
+import EventsList from "./pages/EventsList";
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
-import Body from "./components/dashboard/Body"
+import Dashboard from "./pages/Dashboard";
+import DetailsEvent from "./pages/DetailsEvent";
+import { ContextProvider } from "./services/Context.jsx";
 
 function App() {
   return (
+    <ContextProvider>
       <Routes>
-        <Route path="/" element = {<Layout />}>
-          <Route index element={<Home/>}/>
-          <Route path="/addEvent" element={<EventForm />}/>
-          <Route path="/events" element={<EventsList />}/>
+        {/* Routes indépendantes */}
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
-        <Route path="/dashboard" element={<Body />} />
-        
-        
 
-
-
-      </Route>
+        {/* Routes avec Layout */}
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="details/:id" element={<DetailsEvent />} />
+          <Route path="addEvent" element={<EventForm />} />
+          <Route path="events" element={<EventsList />} />
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
+    </ContextProvider>
   );
 }
 

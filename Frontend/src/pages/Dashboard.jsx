@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import Context from "../services/Context.jsx"; // import du context
 
 export default function Dashboard() {
   const [page, setPage] = useState("events");
+  const { subscribers } = useContext(Context); // récupérer les abonnés
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -13,33 +15,25 @@ export default function Dashboard() {
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setPage("events")}
-          className={`px-4 py-2 rounded-lg ${
-            page === "events" ? "bg-black text-white" : "bg-gray-200"
-          }`}
+          className={`px-4 py-2 rounded-lg ${page === "events" ? "bg-black text-white" : "bg-gray-200"}`}
         >
           Événements
         </button>
-
         <button
           onClick={() => setPage("tickets")}
-          className={`px-4 py-2 rounded-lg ${
-            page === "tickets" ? "bg-black text-white" : "bg-gray-200"
-          }`}
+          className={`px-4 py-2 rounded-lg ${page === "tickets" ? "bg-black text-white" : "bg-gray-200"}`}
         >
           Tickets
         </button>
-
         <button
           onClick={() => setPage("newsletter")}
-          className={`px-4 py-2 rounded-lg ${
-            page === "newsletter" ? "bg-black text-white" : "bg-gray-200"
-          }`}
+          className={`px-4 py-2 rounded-lg ${page === "newsletter" ? "bg-black text-white" : "bg-gray-200"}`}
         >
           Newsletter
         </button>
       </div>
 
-      {/* ----------------- PAGE ÉVÉNEMENTS ----------------- */}
+      {/* PAGE ÉVÉNEMENTS */}
       {page === "events" && (
         <div>
           <div className="flex justify-between items-center mb-6">
@@ -84,7 +78,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ----------------- PAGE TICKETS ----------------- */}
+      {/* PAGE TICKETS */}
       {page === "tickets" && (
         <div>
           <h2 className="text-xl font-semibold mb-4">Gestion des Tickets</h2>
@@ -96,13 +90,11 @@ export default function Dashboard() {
                 <h3 className="font-semibold">Digital Now 2025</h3>
                 <p className="text-sm text-gray-500">Chaimae Afkir</p>
               </div>
-             
             </div>
             <p className="text-gray-500 text-sm">Billet: #T001 — 550DH</p>
             <p className="text-gray-500 text-sm">Événement: 15 Décembre 2025</p>
             <p className="text-gray-500 text-sm">Acheté: 10 Novembre 2025</p>
             <div className="font-bold text-lg">550DH</div>
-
           </div>
 
           {/* Ticket 2 */}
@@ -112,38 +104,33 @@ export default function Dashboard() {
                 <h3 className="font-semibold">GITEX Africa</h3>
                 <p className="text-sm text-gray-500">Sara Belkacem</p>
               </div>
-              
             </div>
             <p className="text-gray-500 text-sm">Billet: #T002 — 890DH</p>
             <p className="text-gray-500 text-sm">Événement: 22 Décembre 2025</p>
             <p className="text-gray-500 text-sm">Acheté: 12 Novembre 2025</p>
             <div className="font-bold text-lg">390DH</div>
-
           </div>
         </div>
       )}
 
-      {/* ----------------- PAGE NEWSLETTER ----------------- */}
+      {/* PAGE NEWSLETTER */}
       {page === "newsletter" && (
         <div>
-    <h2 className="text-xl font-semibold mb-4">Abonnés Newsletter</h2>
-
-    <div className="bg-white p-4 rounded-xl shadow mb-3 flex justify-between items-center">
-      <div>
-        <span>sarabelkacem@gmail.com</span>
-        <p className="text-gray-500 text-sm">Inscrit le 17 Novembre 2025</p>
-      </div>
-      <span className="bg-green-500 text-white px-2 py-1 rounded-md text-xs">actif</span>
-    </div>
-
-    <div className="bg-white p-4 rounded-xl shadow mb-3 flex justify-between items-center">
-      <div>
-        <span>sarabelkacem@gmail.com</span>
-        <p className="text-gray-500 text-sm">Inscrit le 17 Novembre 2025</p>
-      </div>
-      <span className="bg-green-500 text-white px-2 py-1 rounded-md text-xs">actif</span>
-    </div>
-       </div>
+          <h2 className="text-xl font-semibold mb-4">Abonnés Newsletter</h2>
+          {subscribers.length === 0 ? (
+            <p className="text-gray-500">Aucun abonné pour le moment.</p>
+          ) : (
+            subscribers.map((sub, index) => (
+              <div key={index} className="bg-white p-4 rounded-xl shadow mb-3 flex justify-between items-center">
+                <div>
+                  <span className="font-medium">{sub.email}</span>
+                  <p className="text-gray-500 text-sm">Inscrit le {sub.date}</p>
+                </div>
+                <span className="bg-green-500 text-white px-2 py-1 rounded-md text-xs">Actif</span>
+              </div>
+            ))
+          )}
+        </div>
       )}
 
     </div>

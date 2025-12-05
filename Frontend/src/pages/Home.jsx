@@ -1,10 +1,11 @@
-import HeroSection from "../components/HeroSection";
-import EventsList from "./EventsList";
-import NewsLetter from "../components/newsLetter";
-import EventForm from "./EventForm";
+import { useContext } from "react";
+import Context from "../services/Context";
+import HeroSection from '../components/HeroSection';
+import EventsList from './EventsList';
+import NewsLetter from '../components/newsLetter';
 
 function Home() {
-  const events = []
+  const { events, addSubscriber } = useContext(Context);
 
   return (
     <>
@@ -12,9 +13,7 @@ function Home() {
         <HeroSection />
         <EventsList events={events} />
       </div>
-
-      <EventForm />
-      <NewsLetter />
+      <NewsLetter onSubscribe={addSubscriber} />
     </>
   );
 }

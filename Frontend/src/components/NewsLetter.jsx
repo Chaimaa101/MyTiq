@@ -1,29 +1,26 @@
 import React, { useState } from "react";
 import { MdEmail } from "react-icons/md";
 
-function NewsLetter() {
+function NewsLetter({ onSubscribe }) {
   const [email, setEmail] = useState("");
 
   const handleSubscribe = () => {
-    console.log("Subscribed:", email);
+    if (!email) return;
+    onSubscribe(email);  // envoie l'email au Dashboard
+    setEmail("");        // vider l'input
   };
+
   return (
-    <>
-    <section className="bg-gradient-to-r from-gray-200 to-gray-300 rounded-xl py-12 px-6 text-center mt-12">
+    <section className="bg-gradient-to-r from-gray-200 to-gray-300 rounded-xl py-12 px-6 text-center mt-6">
       <div className="flex justify-center mb-4">
         <MdEmail className="text-red-500 w-14 h-14" />
       </div>
 
-      {/* Title */}
-      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-        Restez informé
-      </h2>
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Restez informé</h2>
       <p className="text-gray-600 max-w-xl mx-auto mb-6">
-        Inscrivez-vous à notre newsletter pour recevoir les dernières
-        actualités et offres exclusives.
+        Inscrivez-vous à notre newsletter pour recevoir les dernières actualités et offres exclusives.
       </p>
 
-      {/* Input + Button */}
       <div className="flex justify-center gap-2 max-w-lg mx-auto">
         <input
           type="email"
@@ -40,9 +37,7 @@ function NewsLetter() {
         </button>
       </div>
     </section>
-
-    </>
-  )
+  );
 }
 
-export default NewsLetter
+export default NewsLetter;

@@ -1,8 +1,6 @@
 import EventCard from "../components/EventCard";
 
-
-const EventsList = ({ events }) => {
-  
+const EventsList = ({ events = [] }) => {  // valeur par défaut vide
   return (
     <section className="mt-10">
       <h2 className="text-xl font-bold text-gray-900">Événements à la une</h2>
@@ -17,6 +15,8 @@ const EventsList = ({ events }) => {
             image={event.image}
             title={event.title}
             date={event.date}
+            place={event.place}
+            capacity={event.capacity}
             price={event.price}
           />
         ))}
@@ -24,5 +24,5 @@ const EventsList = ({ events }) => {
     </section>
   );
 };
-
 export default EventsList;
+
