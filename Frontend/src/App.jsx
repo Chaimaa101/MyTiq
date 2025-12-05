@@ -6,6 +6,7 @@ import EventForm from "./pages/EventForm"
 import EventsList from "./pages/EventsList"
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
+import Body from "./components/dashboard/Body"
 
 function App() {
   return (
@@ -16,6 +17,12 @@ function App() {
           <Route path="/events" element={<EventsList />}/>
         <Route path="/connexion" element={<Connexion />} />
         <Route path="/inscription" element={<Inscription />} />
+        <Route path="/dashboard" element={<Body />} />
+        
+        
+
+
+
       </Route>
       </Routes>
   );
