@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import EventCard from "../components/EventCard";
+import { EventContext } from "../hooks/EventContext";
 
-
-const EventsList = ({ events }) => {
-  
+const EventsList = () => {
+   const { events  } = useContext(EventContext);
   return (
-    <section className="mt-10">
+    <section className="m-15">
       <h2 className="text-xl font-bold text-gray-900">Événements à la une</h2>
       <p className="text-gray-500 mb-6">
         Découvrez notre sélection d'événements exceptionnels.

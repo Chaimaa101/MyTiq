@@ -4,46 +4,65 @@ namespace App\Http\Controllers;
 
 use App\Events\NewsletterSubscribed;
 use App\Models\Newsletter;
-use App\Http\Requests\StoreNewsletterRequest;
-use App\Http\Requests\UpdateNewsletterRequest;
 use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function abonner( Request $request)
+    public function index()
     {
-        
-        $request->validate([
-            'email' => 'required|email|unique:newsletters,email'
-        ]);
-
-       $newsletter = Newsletter::create([
-            'email' => $request->email,
-            'confirmed' => true 
-        ]);
-
-          event(new NewsletterSubscribed($newsletter->email));
-
-        return response()->json(['message' => 'Subscribed successfully!']);
+        try {
+            return Newsletter::all();
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
-    
+    public function abonner(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'email' => 'required|email|unique:newsletters,email'
+            ]);
+
+            $newsletter = Newsletter::create([
+                'email' => $request->email,
+                // 'confirmed' => true
+            ]);
+
+            // event(new NewsletterSubscribed($newsletter->email));
+
+            return response()->json(['message' => 'Subscribed successfully!']);
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function desabonner(Request $request )
+    public function desabonner(Request $request)
     {
-          $request->validate([
-            'email' => 'required|email|exists:newsletters,email'
-        ]);
+        try {
 
-        Newsletter::where('email', $request->email)->delete();
+            $request->validate([
+                'email' => 'required|email|exists:newsletters,email'
+            ]);
 
-        return response()->json(['message' => 'Unsubscribed successfully!']);
+            Newsletter::where('email', $request->email)->delete();
+
+            return response()->json(['message' => 'Unsubscribed successfully!']);
+
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage()
+            ];
+        }
     }
-    
 }

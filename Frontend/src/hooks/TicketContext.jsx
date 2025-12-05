@@ -1,74 +1,76 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import API from "../utils/API";
+import { useEffect, useState, createContext } from "react";
+import API from "../pages/services/API";
 
-function ContextGenerale({ children}) {
-  const [tickets, settickets] = useState([]);
+export const TicketContext = createContext();
 
- 
-  useEffect(() => {
-  const fetchData = async () => {
+function TicketProvider({ children }) {
+  const [tickets, setTickets] = useState([]);
+  const [errors, setErrors] = useState(null);
+
+  const fetchTickets = async () => {
     try {
       const response = await axios.get(`${API}/tickets`);
-      settickets(response.data.data)
-    } catch (error) {
-      console.error(` Fetch error at tickets:`, error);
+      setTickets(response.data.data);
+      setErrors(null);
+    } catch (err) {
+      console.error("Fetch tickets error:", err);
+      setErrors(err.response?.data?.error || "Erreur lors du chargement");
     }
   };
 
-   fetchData()
+  useEffect(() => {
+    fetchTickets();
   }, []);
 
-  const ajouter = async (data,event) => {
+  const reserver = async (data, ticket) => {
     try {
-       await axios.post(`${API}events/${event}/tickets/`, data, {
-        headers: { "Content-Type": "application/json" },
-      });
-
-      alert(" Added successfully!");
-    } catch (error) {
-      console.error(" Add error:", error);
-      alert("Error while adding!");
-    }
-  };
-
-  const modifier = async ( data, ticket,event) => {
-    try {
-    await axios.put(
-        `${API}events/${event}/tickets/${ticket}`,
-        data
+      const response = await axios.post(
+        `${API}/events/${ticket}/tickets`,
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       );
 
-      alert("✔ Updated successfully!");
-    } catch (error) {
-      console.error(" Update error:", error);
-      alert("Error while updating!");
+      alert(response.data.message || "Added successfully!");
+      fetchTickets();
+    } catch (err) {
+      console.error("Add error:", err);
+     setErrors(err.response?.data?.message || err.response?.data?.errors || "Error while adding");
     }
   };
 
-  const supprimer = async (event,ticket) => {
-    try {
-      await axios.delete(`${API}events/${event}/tickets/${ticket}`);
 
-      alert(" Deleted successfully!");
-    } catch (error) {
-      console.error(" Delete error:", error);
-      alert("Error while deleting!");
+  const cancel = async (ticket,event ) => {
+    try {
+
+      const response = await axios.delete(
+        `${API}/events/${event}/tickets/${ticket}`
+      );
+
+      alert(response.data.message || "Deleted successfully!");
+      fetchTickets();
+    } catch (err) {
+      console.error("Delete error:", err);
+     setErrors(err.response?.data?.message || err.response?.data?.errors || "Error while adding");
+     
     }
   };
 
   return (
-    <Context.Provider
+    <TicketContext.Provider
       value={{
         tickets,
-        ajouter,
-        modifier,
-        supprimer,
+        errors,
+        reserver,
+        cancel,
+        refreshTickets: fetchTickets,
       }}
     >
       {children}
-    </Context.Provider>
+    </TicketContext.Provider>
   );
 }
 
-export default ContextGenerale;
+export default TicketProvider;
