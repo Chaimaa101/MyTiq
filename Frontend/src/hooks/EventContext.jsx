@@ -1,79 +1,95 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import Context from "../services/Context";
-import API from "../services/API";
+import { createContext, useEffect, useState } from "react";
+import API from "../pages/services/API";
 
-function ContextGenerale({ children }) {
+export const EventContext = createContext(null);
+
+function EventProvider({ children }) {
   const [events, setevents] = useState([]);
+  const [errors, setErrors] = useState(null);
 
  
-  useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${API}/events`);
-      setevents(response.data.data)
-    } catch (error) {
-      console.error(` Fetch error at events:`, error);
-    }
-  };
-
-   fetchData()
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API}/events`);
+        setevents(response.data.data);
+      } catch (error) {
+        console.error(` Fetch error at events:`, error);
+        setErrors(response.data.error)
+      }
+    };
+ useEffect(() => {
+    fetchData();
   }, []);
 
   const ajouter = async (data) => {
     try {
-       const formDataToSend = new FormData();
+      const formDataToSend = new FormData();
 
       for (let key in data) {
-      formDataToSend.append(key, data[key]);
-    }
-
-      const res = await axios.post(`${API}/events`, data, {
-        headers: { "Content-Type": "application/json" },
+        formDataToSend.append(key, data[key]);
+      }
+       const response = await axios.post(`${API}/events`, formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-return res.data
+      alert(response.data.message)
     } catch (error) {
       console.error(" Add error:", error);
+        setErrors(response.data.errors)
     }
   };
 
-  const modifier = async ( data, event) => {
+  const modifier = async (data, event) => {
     try {
-    await axios.put(
-        `${API}/events/${event}`,
-        data
+      const formDataToSend = new FormData();
+
+      for (let key in data) {
+        formDataToSend.append(key, data[key]);
+      }
+
+      const response = await axios.post(
+        `${API}/events/${event}?_method=PUT`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      alert("Updated successfully!");
+      alert(response.data.message);
     } catch (error) {
       console.error(" Update error:", error);
-      alert("Error while updating!");
+        setErrors(response.data.errors)
+
     }
   };
 
   const supprimer = async (event) => {
     try {
-      await axios.delete(`${API}/events/${event}`);
+      const response = await axios.delete(`${API}/events/${event}`);
 
-      alert(" Deleted successfully!");
+      alert(response.data.message);
     } catch (error) {
       console.error(" Delete error:", error);
-      alert("Error while deleting!");
+      setErrors(response.data.error)
+
     }
   };
 
   return (
-    <Context.Provider
+    <EventContext.Provider
       value={{
         events,
         ajouter,
         modifier,
         supprimer,
+        errors
       }}
     >
       {children}
-    </Context.Provider>
+    </EventContext.Provider>
   );
 }
 
-export default ContextGenerale;
+export default EventProvider;

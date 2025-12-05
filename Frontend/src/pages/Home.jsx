@@ -1,3 +1,4 @@
+
 import { useContext } from "react";
 import Context from "../services/Context";
 import HeroSection from '../components/HeroSection'
@@ -10,7 +11,7 @@ function Home() {
     <>
       <div className="p-6 max-w-6xl mx-auto">
         <HeroSection />
-        <EventsList events={events} />
+        <EventsList />
       </div>
       <NewsLetter />
     </>

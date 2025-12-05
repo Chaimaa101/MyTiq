@@ -3,8 +3,10 @@ import Layout from "./components/Layout"
 import Home from "./pages/Home"
 import EventForm from "./pages/EventForm"
 import EventsList from "./pages/EventsList"
-import Connexion from "./pages/Connexion  ";
-import Inscription from "./pages/Inscription ";
+import Connexion from "./pages/Connexion";
+import Inscription from "./pages/Inscription";
+import MesTickets from "./pages/MesTickets"
+
 function App() {
   return (
       <Routes>
@@ -23,7 +25,8 @@ function App() {
           <Route index element={<Home/>}/>
           <Route path="/addEvent" element={<EventForm />}/>
           <Route path="/events" element={<EventsList />}/>
-      
+          <Route path="/mestickets" element={<MesTickets />}/>
+
       </Route>
       </Routes>
   );

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdEmail } from "react-icons/md";
+import { NewsLetterContext } from "../hooks/NewsLetterContext";
 
 function NewsLetter() {
   const [email, setEmail] = useState("");
-
+  const { abonner } = useContext(NewsLetterContext);
+  
   const handleSubscribe = () => {
-    console.log("Subscribed:", email);
+    console.log(email)
+    abonner({email : email})
+    
   };
   return (
     <>
@@ -27,8 +31,9 @@ function NewsLetter() {
       <div className="flex justify-center gap-2 max-w-lg mx-auto">
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
           placeholder="Votre adresse email"
           className="p-3 rounded-lg w-full text-gray-800 bg-white"
         />

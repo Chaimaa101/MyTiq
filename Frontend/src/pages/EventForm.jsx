@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import Context from "../services/Context";
+import { EventContext } from "../hooks/EventContext";
 
 const EventForm = () => {
   const navigate = useNavigate();
 
-  const { ajouter } = useContext(Context);
+  const { ajouter } = useContext(EventContext);
   const [errors, setErrors] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -31,6 +30,8 @@ const EventForm = () => {
     event.preventDefault();
     console.log(formData)
     const res = await ajouter(formData);
+
+    navigate('/events')
 
     if (res?.errors) {
       setErrors(res.errors);

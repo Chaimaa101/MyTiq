@@ -5,19 +5,31 @@ namespace App\Http\Controllers;
 use App\Events\TicketCanceled;
 use App\Events\TicketCreated;
 use App\Models\Ticket;
-use App\Http\Requests\StoreTicketRequest;
-use App\Http\Requests\UpdateTicketRequest;
 use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    
+    public function index()
+    {
+        try {
+            $tckets =  Ticket::all();
+               return response()->json([
+            'data'    => $tckets
+        ], 200);
+        } catch (\Exception $e) {
+             return [
+                'error' => $e->getMessage()
+            ];
+        }
+    }     
+    
+    public function myTickets(Request $request)
     {
         try {
             return  $request->user()->tickets()->with('event','user')->get();
@@ -32,7 +44,7 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
- public function store(StoreTicketRequest $request, Event $event)
+ public function store(Request $request, Event $event)
 {
     try {
         $user = $request->user();
@@ -83,15 +95,6 @@ class TicketController extends Controller
             ];
         }
     }
-
-    public function update(Request $request, Event $event, Ticket $ticket)
-{
-    $ticket->update($request->all());
-    return response()->json([
-        'message' => 'Ticket updated successfully',
-        'ticket' => $ticket
-    ], 200);
-}
 
     /**
      * Remove the specified resource from storage.
