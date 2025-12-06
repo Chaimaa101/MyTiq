@@ -24,7 +24,7 @@ class EventFactory extends Factory
             'place' => fake()->city(),
             'price' => fake()->randomFloat(2, 10, 300),
             'capacity' => fake()->numberBetween(50, 500),
-            'image' => fake()->imageUrl(),
+            'image' => 'src/assets/placeholder.jpg',
         ];
     }
 }

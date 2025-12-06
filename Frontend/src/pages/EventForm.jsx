@@ -5,7 +5,8 @@ import { EventContext } from "../hooks/EventContext";
 const EventForm = () => {
   const navigate = useNavigate();
 
-  const { ajouter } = useContext(EventContext);
+  const { ajouter, loading } = useContext(EventContext);
+
   const [errors, setErrors] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
@@ -28,10 +29,9 @@ const EventForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData)
     const res = await ajouter(formData);
 
-    navigate('/events')
+    navigate("/events");
 
     if (res?.errors) {
       setErrors(res.errors);
@@ -138,9 +138,14 @@ const EventForm = () => {
 
         <button
           type="submit"
-          className="bg-red-600 text-white w-full py-3 rounded-lg hover:bg-red-700"
+          disabled={loading}
+          className={`w-full py-3 rounded-lg text-white 
+    ${
+      loading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
+    }
+  `}
         >
-          + Créer
+          {loading ? "Veuillez patienter..." : "+ Créer"}
         </button>
       </form>
     </div>

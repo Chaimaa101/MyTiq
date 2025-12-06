@@ -3,7 +3,7 @@ import EventCard from "../components/EventCard";
 import { EventContext } from "../hooks/EventContext";
 
 const EventsList = () => {
-   const { events  } = useContext(EventContext);
+   const { events  ,loading } = useContext(EventContext);
   return (
     <section className="m-15">
       <h2 className="text-xl font-bold text-gray-900">Événements à la une</h2>
@@ -11,10 +11,19 @@ const EventsList = () => {
         Découvrez notre sélection d'événements exceptionnels.
       </p>
 
+ {loading && (
+ 
+      <div className="text-center mt-20 text-xl animate-pulse">
+        Chargement...
+      </div>
+    )
+  }
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map((event) => (
           <EventCard
             key={event.id}
+            id={event.id}
             image={event.image}
             title={event.title}
             date={event.date}

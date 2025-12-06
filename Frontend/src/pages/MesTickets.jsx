@@ -4,9 +4,6 @@ import { TicketContext } from "../hooks/TicketContext";
 
 function MesTickets() {
   const { tickets, errors } = useContext(TicketContext);
-  console.log(tickets)
-  console.log( newsletters)
-
   return (
     <>
       <h1>Mes Tickets</h1>
@@ -22,12 +19,7 @@ function MesTickets() {
       {tickets.map((ticket) => (
         <h1 key={ticket.id}>{ticket.date}</h1>
       ))}
-   
-      {newsletters.length === 0 && <p>Aucun ticket trouvé.</p>}
-
-      {newsletters.map((newsletter) => (
-        <h1 key={newsletter.id}>{newsletter.date}</h1>
-      ))}
+  
     </>
   );
 }

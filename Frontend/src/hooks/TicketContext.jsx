@@ -7,15 +7,21 @@ export const TicketContext = createContext();
 function TicketProvider({ children }) {
   const [tickets, setTickets] = useState([]);
   const [errors, setErrors] = useState(null);
+    const [loading, setLoading] = useState(true);
+
 
   const fetchTickets = async () => {
     try {
       const response = await axios.get(`${API}/tickets`);
       setTickets(response.data.data);
       setErrors(null);
+              setLoading(false)
+
     } catch (err) {
       console.error("Fetch tickets error:", err);
       setErrors(err.response?.data?.error || "Erreur lors du chargement");
+    setLoading(false)
+
     }
   };
 
@@ -23,11 +29,10 @@ function TicketProvider({ children }) {
     fetchTickets();
   }, []);
 
-  const reserver = async (data, ticket) => {
+  const reserver = async ( event) => {
     try {
       const response = await axios.post(
-        `${API}/events/${ticket}/tickets`,
-        data,
+        `${API}/events/${event}/tickets`,
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -58,6 +63,22 @@ function TicketProvider({ children }) {
     }
   };
 
+  function downloadTicket(eventId) {
+  axios.post(`/api/events/${eventId}/tickets`, {}, {
+    responseType: 'blob' 
+  })
+  .then(res => {
+    const blob = new Blob([res.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+
+    window.open(url, '_blank');
+
+    setTimeout(() => window.URL.revokeObjectURL(url), 10000);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+}
   return (
     <TicketContext.Provider
       value={{
@@ -65,6 +86,8 @@ function TicketProvider({ children }) {
         errors,
         reserver,
         cancel,
+        loading,
+        downloadTicket,
         refreshTickets: fetchTickets,
       }}
     >
