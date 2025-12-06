@@ -44,7 +44,8 @@ class TicketController extends Controller
     /**
      * Store a newly created resource in storage.
      */
- public function store(Request $request, Event $event)
+
+public function store(Request $request, Event $event)
 {
     try {
         $user = $request->user();
@@ -54,29 +55,33 @@ class TicketController extends Controller
                 "message" => "Les billets pour cet événement sont épuisés !"
             ], 422);
         }
-        
-             $ticket = $user->tickets()->create([
+
+        // Prepare a transient ticket array (not saved to DB)
+        $ticketData = [
+            'id' => null,
             'event_id' => $event->id,
-            'date'     => now(),
-        ]);
+            'user_id' => $user->id,
+            'date' => now()->toDateTimeString(),
+            'code' => strtoupper(uniqid('TKT-')), // optional ticket code
+        ];
 
-        
-        $pdf = Pdf::loadView('Tickets.ticket_pdf', [
-            'ticket' => $ticket,
+        // Render PDF from a Blade view (resources/views/tickets/ticket_pdf.blade.php)
+        $pdf = Pdf::loadView('tickets.ticket_pdf', [
+            'ticket' => (object) $ticketData, // view may expect object
             'event' => $event,
-            'user' => $user,
+            'user'  => $user,
         ]);
-        
-        event(new TicketCreated($ticket));
 
-        return response()->json([
-            'message' => 'Ticket created successfully!',
-            'ticket'  => $ticket
-        ], 201);
-        
+        // Option 1: display inline in browser (user sees PDF in new tab)
+        // return $pdf->stream('ticket.pdf');
+
+        // Option 2: force download
+        return $pdf->download('ticket.pdf');
+
+        // (No file is stored)
     } catch (\Exception $e) {
         return response()->json([
-            'error'   =>  $e->getMessage()
+            'error' => $e->getMessage()
         ], 500);
     }
 }
