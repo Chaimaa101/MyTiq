@@ -7,15 +7,20 @@ export const EventContext = createContext(null);
 function EventProvider({ children }) {
   const [events, setevents] = useState([]);
   const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(true);
+
 
  
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API}/events`);
         setevents(response.data.data);
+        setLoading(false)
       } catch (error) {
         console.error(` Fetch error at events:`, error);
         setErrors(response.data.error)
+        setLoading(false)
+
       }
     };
  useEffect(() => {
@@ -32,10 +37,15 @@ function EventProvider({ children }) {
        const response = await axios.post(`${API}/events`, formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      setLoading(false)
+      fetchData()
       alert(response.data.message)
     } catch (error) {
       console.error(" Add error:", error);
-        setErrors(response.data.errors)
+      setErrors(response.data.errors)
+      
+      setLoading(false)
+   
     }
   };
 
@@ -61,6 +71,7 @@ function EventProvider({ children }) {
     } catch (error) {
       console.error(" Update error:", error);
         setErrors(response.data.errors)
+      setLoading(false)
 
     }
   };
@@ -73,6 +84,8 @@ function EventProvider({ children }) {
     } catch (error) {
       console.error(" Delete error:", error);
       setErrors(response.data.error)
+      setLoading(false)
+
 
     }
   };
@@ -84,7 +97,8 @@ function EventProvider({ children }) {
         ajouter,
         modifier,
         supprimer,
-        errors
+        errors,
+        loading
       }}
     >
       {children}

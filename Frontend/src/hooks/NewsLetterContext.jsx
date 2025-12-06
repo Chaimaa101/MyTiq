@@ -9,19 +9,19 @@ function NewsLetterProvider({ children }) {
   const [abonnees, setAbonnees] = useState([]);
   const [errors, setErrors] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`${API}/newsletters`);
-  //       setAbonnees(response.data.data);
-  //     } catch (error) {
-  //       console.error(` Fetch error at events:`, error);
-  //       setErrors(response.data.error)
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API}/newsletters`);
+        setAbonnees(response.data.data);
+      } catch (error) {
+        console.error(` Fetch error at events:`, error);
+        setErrors(response.data.error)
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   const abonner = async (email) => {
     try {

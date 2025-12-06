@@ -20,6 +20,9 @@ export default function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
+
+  
+
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );

@@ -1,19 +1,13 @@
 import React from "react";
 import {
   FaCalendarDay,
-  FaChair,
   FaEuroSign,
-  FaLocationArrow,
   FaLocationDot,
-  FaMoneyBill,
-  FaMoneyBill1,
-  FaMoneyBills,
-  FaPlaceOfWorship,
   FaTicket,
-  FaTicketSimple,
 } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const EventCard = ({ image, title, date, place, capacity, price }) => {
+const EventCard = ({ image,id,  title, date, place, capacity, price }) => {
   return (
     <div className="bg-white shadow-md rounded-xl p-3">
       <img
@@ -45,9 +39,9 @@ const EventCard = ({ image, title, date, place, capacity, price }) => {
             {price} DH
           </span>
 
-          <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
-            Réserver
-          </button>
+          <Link to={`/details/${id}`} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
+            Voir details
+          </Link>
         </div>
       </div>
     </div>

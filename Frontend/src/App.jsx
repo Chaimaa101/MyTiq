@@ -6,6 +6,7 @@ import EventsList from "./pages/EventsList"
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 import MesTickets from "./pages/MesTickets"
+import DetailsEvent from "./pages/DetailsEvent"
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           <Route path="/addEvent" element={<EventForm />}/>
           <Route path="/events" element={<EventsList />}/>
           <Route path="/mestickets" element={<MesTickets />}/>
+          <Route path="details/:id" element={<DetailsEvent />} />
+          <Route path="events/edit/:id" element={<DetailsEvent />} />
+
 
       </Route>
       </Routes>
