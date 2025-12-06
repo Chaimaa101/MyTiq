@@ -1,14 +1,19 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../hooks/AuthContext";
+import { useContext } from "react";
+
 
 export default function Connexion() {
   const { register, handleSubmit } = useForm();
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/login", data);
+      await login(data);
       alert("Connexion réussie !");
+      navigate("/"); // redirect home
     } catch {
       alert("Erreur de connexion.");
     }

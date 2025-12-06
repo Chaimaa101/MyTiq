@@ -1,15 +1,18 @@
-import React from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../hooks/AuthContext";
 
 export default function Inscription() {
   const { register, handleSubmit } = useForm();
+  const { register: registerUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/register", data);
+      await registerUser(data);
       alert("Compte créé !");
+      navigate("/"); // redirect home
     } catch {
       alert("Erreur pendant l'inscription.");
     }

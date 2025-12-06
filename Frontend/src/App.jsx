@@ -6,6 +6,7 @@ import EventsList from "./pages/EventsList"
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 import MesTickets from "./pages/MesTickets"
+import DetailsEvent from "./pages/DetailsEvent";
 
 function App() {
   return (

@@ -4,7 +4,7 @@ import { AuthContext } from "../hooks/AuthContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <nav className="w-full bg-white shadow-sm">
@@ -44,15 +44,24 @@ export default function Navbar() {
                 className="hidden md:block text-white font-medium bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer transition"
                 onClick={logout}
               >
-                logout
+                Deconnexion
               </button>
             </>
           ) : (
-            <>
-              <button className="hidden md:block text-white font-medium bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer transition">
-                <Link to="/connexion">Connexion</Link>
-              </button>
-            </>
+            <div  className="flex gap-6"  > 
+            <Link
+              to="/connexion"
+              className="block text-gray-700 border border-gray-300 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+            >
+              Connexion
+            </Link>
+            <Link
+              to="/inscription"
+              className="block text-white bg-red-600 px-4 py-2 rounded-md hover:bg-red-700"
+            >
+              S’inscrire
+            </Link>
+            </div>
           )}
         </div>
 
@@ -81,18 +90,30 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2 bg-white border-t border-gray-200">
-          <Link to="/" className="block text-gray-700 hover:text-red-600">
-            Accueil
-          </Link>
-          <Link
-            to="/dashboard"
-            className="block text-gray-700 hover:text-red-600"
-          >
-            Dashboard
-          </Link>
-          <Link to="/events" className="block text-gray-700 hover:text-red-600">
-            Evenements
-          </Link>
+          <Link className="block hover:text-red-600" to="/">Accueil</Link>
+          <Link className="block hover:text-red-600" to="/events">Evenements</Link>
+
+          {user && (
+            <Link className="block hover:text-red-600" to="/mestickets">
+              Mes tickets
+            </Link>
+          )}
+
+          {user?.role === "admin" && (
+            <>
+              <Link className="block hover:text-red-600" to="/dashboard">Dashboard</Link>
+              <Link className="block hover:text-red-600" to="/addEvent">Add Event</Link>
+            </>
+          )}
+
+          {user && (
+            <button
+              onClick={logout}
+              className="block text-left text-red-600 font-bold"
+            >
+              Logout
+            </button>
+          )}
         </div>
       )}
     </nav>
