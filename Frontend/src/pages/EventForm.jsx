@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { EventContext } from "../hooks/EventContext";
+import { EventContext } from "../context/EventContext";
 
 const EventForm = () => {
   const navigate = useNavigate();

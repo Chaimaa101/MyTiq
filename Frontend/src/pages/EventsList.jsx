@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import EventCard from "../components/EventCard";
-import { EventContext } from "../hooks/EventContext";
+import { EventContext } from "../context/EventContext";
 
 const EventsList = () => {
    const { events  ,loading } = useContext(EventContext);

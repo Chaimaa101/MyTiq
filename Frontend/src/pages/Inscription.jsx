@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../hooks/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Inscription() {
   const { register, handleSubmit } = useForm();
@@ -12,7 +12,7 @@ export default function Inscription() {
     try {
       await registerUser(data);
       alert("Compte créé !");
-      navigate("/"); // redirect home
+      navigate("/"); 
     } catch {
       alert("Erreur pendant l'inscription.");
     }

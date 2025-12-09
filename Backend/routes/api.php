@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/abonner', [NewsletterController::class, 'abonner']);
 Route::post('/desabonner', [NewsletterController::class, 'desabonner']);
+Route::get('/newsLetters', [NewsletterController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -37,7 +38,7 @@ Route::get('/events/{id}', [EventController::class, 'show']);
 
 
 Route::post('logout', [AuthController::class, 'logout']);
-Route::apiResource('event.tickets',TicketController::class);
+Route::apiResource('events.tickets',TicketController::class);
 Route::get('/myTickets', [TicketController::class, 'myTickets']);
 
 // Route::middleware(['auth:sanctum'])->group(function () {

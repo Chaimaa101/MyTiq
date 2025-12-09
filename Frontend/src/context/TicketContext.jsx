@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, createContext } from "react";
-import API from "../pages/services/API";
+import API from "../services/API";
 
 export const TicketContext = createContext();
 

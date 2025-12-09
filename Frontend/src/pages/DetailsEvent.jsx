@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { TicketContext } from "../hooks/TicketContext";
+import { TicketContext } from "../context/TicketContext";
 
 function DetailsEvent() {
   const { id } = useParams();
@@ -62,7 +62,7 @@ const AcheterTicket = async () => {
           <p className="text-3xl font-bold text-red-600 mt-2">{event.price} DH</p>
 
           <button
-            onClick={AcheterTicket()}
+            onClick={AcheterTicket}
             className="mt-6 w-full bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition"
           >
             Acheter un billet

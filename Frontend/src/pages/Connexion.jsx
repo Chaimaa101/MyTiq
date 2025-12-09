@@ -1,22 +1,19 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../hooks/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 
 export default function Connexion() {
   const { register, handleSubmit } = useForm();
-  const { login } = useContext(AuthContext);
+  const { login,errors,loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    try {
+
       await login(data);
-      alert("Connexion réussie !");
-      navigate("/"); // redirect home
-    } catch {
-      alert("Erreur de connexion.");
-    }
+      navigate("/"); 
+
   };
 
   return (   

@@ -18,7 +18,7 @@ class TicketController extends Controller
     public function index()
     {
         try {
-            $tckets =  Ticket::all();
+            $tckets =  Ticket::with('event', 'user')->get();
                return response()->json([
             'data'    => $tckets
         ], 200);

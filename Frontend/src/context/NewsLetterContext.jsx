@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import API from "../pages/services/API";
+import API from "../services/API";
 
 export const NewsLetterContext = createContext(null);
 
@@ -12,11 +12,11 @@ function NewsLetterProvider({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API}/newsletters`);
-        setAbonnees(response.data.data);
+        const response = await axios.get(`${API}/newsLetters`);
+        console.log(response.data);
       } catch (error) {
         console.error(` Fetch error at events:`, error);
-        setErrors(response.data.error)
+        setAbonnees(response.data.error)
       }
     };
 

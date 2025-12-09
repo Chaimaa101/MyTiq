@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { MdEmail } from "react-icons/md";
-import { NewsLetterContext } from "../hooks/NewsLetterContext";
+import { NewsLetterContext } from "../context/NewsLetterContext";
 
 function NewsLetter() {
   const [email, setEmail] = useState("");

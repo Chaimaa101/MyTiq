@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { TicketContext } from "../hooks/TicketContext";
+import { TicketContext } from "../context/TicketContext";
+
 
 
 function MesTickets() {

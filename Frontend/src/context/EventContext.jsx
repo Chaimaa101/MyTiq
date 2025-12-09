@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import API from "../pages/services/API";
+import API from "../services/API";
 
 export const EventContext = createContext(null);
 
@@ -8,8 +8,6 @@ function EventProvider({ children }) {
   const [events, setevents] = useState([]);
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(true);
-
-
  
     const fetchData = async () => {
       try {
