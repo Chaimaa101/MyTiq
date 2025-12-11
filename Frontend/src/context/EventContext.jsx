@@ -21,8 +21,10 @@ function EventProvider({ children }) {
 
       }
     };
+
  useEffect(() => {
     fetchData();
+
   }, []);
 
   const ajouter = async (data) => {

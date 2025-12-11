@@ -13,7 +13,7 @@ function NewsLetterProvider({ children }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API}/newsLetters`);
-        console.log(response.data);
+        setAbonnees(response.data);
       } catch (error) {
         console.error(` Fetch error at events:`, error);
         setAbonnees(response.data.error)

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import Layout from "./components/Layout"
 import Home from "./pages/Home"
 import EventForm from "./pages/EventForm"
+import EventEdit from "./pages/EventEdit"
 import EventsList from "./pages/EventsList"
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element = {<Layout />}>
           <Route index element={<Home/>}/>
           <Route path="/addEvent" element={<EventForm />}/>
+          <Route path="/editEvent/:id" element={<EventEdit />}/>
           <Route path="/events" element={<EventsList />}/>
           <Route path="/mestickets" element={<MesTickets />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
@@ -25,7 +27,7 @@ function App() {
           <Route path="events/edit/:id" element={<DetailsEvent />} />
 
 
-      </Route>
+      </Route>                                                                                
       </Routes>
   );
 }

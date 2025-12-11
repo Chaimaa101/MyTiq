@@ -41,7 +41,7 @@ function EditEvent() {
   // Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-
+ 
   };
 
   if (loading) return <p>Loading...</p>;

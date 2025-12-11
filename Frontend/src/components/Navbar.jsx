@@ -5,7 +5,6 @@ import { AuthContext } from "../context/AuthContext";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
-  console.log(user)
 
   return (
     <nav className="w-full bg-white shadow-sm">
@@ -20,32 +19,32 @@ export default function Navbar() {
           <li className="hover:text-red-600 cursor-pointer">
             <Link to="/events">Evenements</Link>
           </li>
-          {/* {user && ( */}
+          {user && (
             <li className="hover:text-red-600 cursor-pointer">
               <Link to="/mestickets">Mes tickets</Link>
             </li>
-          {/* )} */}
-          {/* {user?.role === "admin" && ( */}
+          )}
+          {user?.role === "admin" && (
             <>
               <li className="hover:text-red-600 cursor-pointer">
                 <Link to="/dashboard">Dashboard</Link>
               </li>
             </>
-          {/* )} */}
+          )} 
         </ul>
 
         <div className="hidden md:flex">
-          {/* {user ? ( */}
+           {user ? ( 
             <>
-              {/* <span>Hello {user.name}</span> */}
-              {/* <button
+              <span>Hello {user.name}</span> 
+               <button
                 className="hidden md:block text-white font-medium bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer transition"
                 onClick={logout}
               >
                 Deconnexion
-              </button> */}
+              </button>
             </>
-          {/* ) : ( */}
+         ) : ( 
             <div  className="flex gap-6"  > 
             <Link
               to="/connexion"
@@ -60,10 +59,9 @@ export default function Navbar() {
               S’inscrire
             </Link>
             </div>
-          {/* )} */}
+         )} 
         </div>
 
-        {/* Mobile button */}
         <div className="md:hidden flex items-center gap-20">
           <button onClick={() => setIsOpen(!isOpen)} className="text-2xl">
             ☰
@@ -85,7 +83,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-2 bg-white border-t border-gray-200">
           <Link className="block hover:text-red-600" to="/">Accueil</Link>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function Dashboard() {
   const [page, setPage] = useState("events");
 
-  const { events } = useContext(EventContext);
+  const { events,supprimer } = useContext(EventContext);
   const { abonnees } = useContext(NewsLetterContext);
   const { tickets } = useContext(TicketContext);
 
@@ -82,10 +82,10 @@ export default function Dashboard() {
                   <div className="flex justify-between items-center">
                     <div className="font-bold text-lg">{event.price} DH</div>
                     <div className="flex gap-2">
-                      <button className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200">
+                      <Link to="/editEvent" className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200">
                         ✏️
-                      </button>
-                      <button className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200">
+                      </Link>
+                      <button onClick={supprimer} className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200">
                         ❌
                       </button>
                     </div>
